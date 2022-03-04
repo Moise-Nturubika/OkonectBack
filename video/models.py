@@ -10,8 +10,8 @@ class Category(models.Model):
 class Media(models.Model):
     title = models.CharField(db_column="title", max_length=100)
     auteur = models.CharField(db_column="auteur", max_length=100, null=True)
-    poster = models.FileField(db_column="poster", upload_to='media/poster/video/', null=True)
-    file = models.FileField(db_column="file", upload_to="media/video")
+    poster = models.FileField(db_column="poster", upload_to='poster/video/', null=True)
+    file = models.FileField(db_column="file", upload_to="video/")
     dateAjout = models.DateTimeField(db_column="dateAjout", auto_now_add=True)
     refCategory = models.ForeignKey(Category, db_column="refCategory", on_delete=models.CASCADE)
     

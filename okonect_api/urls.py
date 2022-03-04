@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/client/', include('client.urls')),
     path('api/serie/', include('serie.urls')),
-    path('api/video/', include('video.urls'))
+    path('api/media/', include('video.urls'))
 ]
 
 if settings.DEBUG:
