@@ -1,4 +1,5 @@
 from django.db import models
+from client.models import Client
 
 class Category(models.Model):
     designation = models.CharField(db_column="designation", max_length=100)
@@ -14,6 +15,7 @@ class Media(models.Model):
     file = models.FileField(db_column="file", upload_to="video/")
     dateAjout = models.DateTimeField(db_column="dateAjout", auto_now_add=True)
     refCategory = models.ForeignKey(Category, db_column="refCategory", on_delete=models.CASCADE)
+    refClient = models.ForeignKey(Client, db_column="refClient", on_delete=models.CASCADE)
     
     class Meta:
         db_table = 'tbMedia'
