@@ -16,5 +16,5 @@ class Media(models.Model):
     refCategory = models.ForeignKey(Category, db_column="refCategory", on_delete=models.CASCADE)
     
     class Meta:
-        db_table = 'tbVideo'
+        db_table = 'tbMedia'
         managed = True
