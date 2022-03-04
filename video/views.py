@@ -6,7 +6,7 @@ from .models import Media, Category
 
 @api_view(['POST'])
 def saveMedia(request):
-    status = { 'status': False }
+    response = { 'status': False }
     media_serializer = MediaSerializer(data=request.data)
     if media_serializer.is_valid():
         title = media_serializer.validated_data['title']
@@ -14,7 +14,7 @@ def saveMedia(request):
         if not medias:
             data = media_serializer.save()
             print(f"{data}")
-            status = {
+            response = {
                 'status': True,
                 'message': 'Media saved succefully',
                 'data': {
@@ -31,21 +31,21 @@ def saveMedia(request):
                 }
             }
         else:
-            status = {
+            response = {
                 'status': False,
                 'message': 'Media with this title already exist'
             }
     else:
-        status = {
+        response = {
             'status': False,
             'message': 'Media data are not valid'
         }
-    return JsonResponse(status)
+    return JsonResponse(response)
 
 
 @api_view(['POST'])
 def updateMedia(request):
-    status = { 'status': False }
+    response = { 'status': False }
     try:
         id = request.POST.get('id')
         print(f"id =========> {id}")
@@ -53,39 +53,39 @@ def updateMedia(request):
         media_serialiser = MediaSerializer(instance=media, data=request.data, partial=True)
         if media_serialiser.is_valid():
             media_serialiser.update()
-            status = {
+            response = {
                 'status': True,
                 'message': 'Media updated succefully'
             }
         else:
-            status = {
+            response = {
                 'status': False,
                 'message': 'Media data are not valid'
             }
     except Media.DoesNotExist:
-        status = {
+        response = {
             'status': False,
             'message': 'Media with this id does not exists'
         }
-    return JsonResponse(status)
+    return JsonResponse(response)
 
 @api_view(['POST'])
 def deleteMedia(request):
-    status = { 'status': False }
+    response = { 'status': False }
     try:
         id = request.data.get('id')
         media = Media.objects.get(pk=id)
         media.delete()
-        status = {
+        response = {
             'status': True,
             'message': 'Media deleted succefully'
         }
     except Exception as exc:
-        status = {
+        response = {
             'status': False,
             'message': 'Error occured when attempting to delete media'
         }
-    return JsonResponse(status)
+    return JsonResponse(response)
 
 @api_view(['GET'])
 def fecthAllMedia(request):
@@ -108,12 +108,13 @@ def fecthAllMedia(request):
 
 @api_view(['GET'])
 def fecthMediaById(request, **kwargs):
-    status = {'status':False}
+    response = {'status':False}
     id = kwargs['id']
     try:
         media = Media.objects.get(pk=id)
         if media: 
-            status = {
+            categ = CategorySerializer(media.refCategory)
+            response = {
                 'status': True,
                 'data': {
                     'id': media.id,
@@ -122,18 +123,15 @@ def fecthMediaById(request, **kwargs):
                     'poster': f'http://127.0.0.1:8000/media/{media.poster}',
                     'file': f'http://127.0.0.1:8000/media/{media.file}',
                     'dateAjout': media.dateAjout,
-                    'category': {
-                        'id': media.refCategory.id,
-                        'designation': media.refCategory.designation
-                    }
+                    'category': categ.data
                 }
             }
     except Media.DoesNotExist:
-        status = {
+        response = {
             'status': False,
             'message': 'File with this id does not exists'
         }
-    return JsonResponse(status)
+    return JsonResponse(response)
     
     
 @api_view(['GET'])
@@ -143,6 +141,7 @@ def fecthMediaByCategory(request, **kwargs):
     cat = Category.objects.get(pk=category)
     medias = Media.objects.filter(refCategory=cat)
     for media in medias:
+        categ = CategorySerializer(media.refCategory)
         data.append(
             {
                 'id': media.id,
@@ -151,10 +150,7 @@ def fecthMediaByCategory(request, **kwargs):
                 'poster': f'http://127.0.0.1:8000/media/{media.poster}',
                 'file': f'http://127.0.0.1:8000/media/{media.file}',
                 'dateAjout': media.dateAjout,
-                'category': {
-                    'id': media.refCategory.id,
-                    'designation': media.refCategory.designation
-                }
+                'category': categ.data
             }
         )
     return JsonResponse(data, safe=False)
