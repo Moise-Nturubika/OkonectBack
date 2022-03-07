@@ -40,7 +40,6 @@ def fetchClientById(request, **kwargs):
     try:
         client = Client.objects.get(pk=id)
         cl = ClientSerializer(client)
-        print(f"Client ------> {cl.data}")
         if client: 
             response = {
                 'status': True,
