@@ -20,3 +20,4 @@ class Media(models.Model):
     class Meta:
         db_table = 'tbMedia'
         managed = True
+
