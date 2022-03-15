@@ -5,6 +5,7 @@ from .serializers import MediaSerializer, CategorySerializer
 from .models import Media, Category
 from django.db.models import Q
 from client.serializers import ClientSerializer
+from client.models import Client
 
 @api_view(['POST'])
 def saveMedia(request):
@@ -213,7 +214,25 @@ def fetchRecentMedia(request):
     return JsonResponse(data, safe=False)
 
 
-# @api_view(['GET'])
-# def fetchCategory(request):
-#     data = []
-#     categories = Category.objects.filter()
+@api_view(['GET'])
+def fetchMediaClient(request, pk):
+    id = pk
+    data = []
+    cl = Client.objects.get(pk=id)
+    recents = Media.objects.filter(refClient=cl).order_by('-dateAjout')[:6]
+    for media in recents:
+        categ = CategorySerializer(media.refCategory)
+        client = ClientSerializer(media.refClient)
+        data.append(
+            {
+                'id': media.id,
+                'title': media.title,
+                'auteur': media.auteur,
+                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.5.29:8000/media/{media.poster}',
+                'file': f'http://192.168.5.29:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
+                'dateAjout': media.dateAjout,
+                'category': categ.data,
+                'client': client.data
+            }
+        )
+    return JsonResponse(data, safe=False)
