@@ -70,3 +70,11 @@ def fetchClientByPhone(request, **kwargs):
             'message': 'Client with this id does not exists'
         }
     return JsonResponse(response)
+
+@api_view(['POST'])
+def loginClient(request):
+    data = []
+    username = request.data.get('username')
+    phone = request.data.get('phone')
+    # client = Client.objects.
+    

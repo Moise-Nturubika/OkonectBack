@@ -24,8 +24,8 @@ def saveMedia(request):
                     'id': data.id,
                     'title': data.title,
                     'auteur': data.auteur,
-                    'poster': None if data.poster == None or len(data.poster) == 0 else f'http://192.168.5.29:8000/media/{data.poster}',
-                    'file': f'http://192.168.5.29:8000/media/{data.file}' if data.file != None or len(data.file) == 0  else None,
+                    'poster': None if data.poster == None or len(data.poster) == 0 else f'http://192.168.43.246:8000/media/{data.poster}',
+                    'file': f'http://192.168.43.246:8000/media/{data.file}' if data.file != None or len(data.file) == 0  else None,
                     'dateAjout': data.dateAjout,
                     'category': {
                         'id': data.refCategory.id,
@@ -51,7 +51,6 @@ def updateMedia(request):
     response = { 'status': False }
     try:
         id = request.POST.get('id')
-        print(f"id =========> {id}")
         media = Media.objects.get(pk=id)
         media_serialiser = MediaSerializer(instance=media, data=request.data, partial=True)
         if media_serialiser.is_valid():
@@ -102,8 +101,8 @@ def fetchAllMedia(request):
                 'id': media.id,
                 'title': media.title,
                 'auteur': media.auteur,
-                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.5.29:8000/media/{media.poster}',
-                'file': f'http://192.168.5.29:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
+                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.43.246:8000/media/{media.poster}',
+                'file': f'http://192.168.43.246:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
                 'dateAjout': media.dateAjout,
                 'category': categ.data,
                 'client': client.data
@@ -126,8 +125,8 @@ def fetchMediaById(request, **kwargs):
                     'id': media.id,
                     'title': media.title,
                     'auteur': media.auteur,
-                    'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.5.29:8000/media/{media.poster}',
-                    'file': f'http://192.168.5.29:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
+                    'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.43.246:8000/media/{media.poster}',
+                    'file': f'http://192.168.43.246:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
                     'dateAjout': media.dateAjout,
                     'category': categ.data,
                     'client': client.data
@@ -155,8 +154,8 @@ def fetchMediaByCategory(request, **kwargs):
                 'id': media.id,
                 'title': media.title,
                 'auteur': media.auteur,
-                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.5.29:8000/media/{media.poster}',
-                'file': f'http://192.168.5.29:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
+                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.43.246:8000/media/{media.poster}',
+                'file': f'http://192.168.43.246:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
                 'dateAjout': media.dateAjout,
                 'category': categ.data,
                 'client': client.data
@@ -176,8 +175,8 @@ def fetchTopMedia(request):
                 'id': media.id,
                 'title': media.title,
                 'auteur': media.auteur,
-                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.5.29:8000/media/{media.poster}',
-                'file': f'http://192.168.5.29:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
+                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.43.246:8000/media/{media.poster}',
+                'file': f'http://192.168.43.246:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
                 'dateAjout': media.dateAjout,
                 'category': categ.data,
                 'client': client.data
@@ -204,8 +203,8 @@ def fetchRecentMedia(request):
                 'id': media.id,
                 'title': media.title,
                 'auteur': media.auteur,
-                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.5.29:8000/media/{media.poster}',
-                'file': f'http://192.168.5.29:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
+                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.43.246:8000/media/{media.poster}',
+                'file': f'http://192.168.43.246:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
                 'dateAjout': media.dateAjout,
                 'category': categ.data,
                 'client': client.data
@@ -228,11 +227,12 @@ def fetchMediaClient(request, pk):
                 'id': media.id,
                 'title': media.title,
                 'auteur': media.auteur,
-                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.5.29:8000/media/{media.poster}',
-                'file': f'http://192.168.5.29:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
+                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.43.246:8000/media/{media.poster}',
+                'file': f'http://192.168.43.246:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
                 'dateAjout': media.dateAjout,
                 'category': categ.data,
                 'client': client.data
             }
         )
     return JsonResponse(data, safe=False)
+
