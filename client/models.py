@@ -5,7 +5,7 @@ class Client(models.Model):
     phone = models.CharField(db_column="phone", max_length=20)
     password = models.CharField(db_column="password", max_length=255)
     image = models.FileField(db_column="image", upload_to='client/profil/', null=True)
-    lastConnection = models.DateTimeField(db_column="lastConnection")
+    lastConnection = models.DateTimeField(db_column="lastConnection", null=True)
 
     class Meta:
         db_table = 'tbClient'

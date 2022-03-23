@@ -29,7 +29,7 @@ def saveClient(request):
     else:
         response = {
             'status': False,
-            'message': 'Client data are not valid'
+            'message': f'Client data are not valid'
         }
     return JsonResponse(response)
 
