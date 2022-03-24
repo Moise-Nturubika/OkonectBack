@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from django.db.models import Q
 from .serializers import ClientSerializer
 from .models import Client
+from django.contrib.auth.hashers import check_password
 
 @api_view(['POST'])
 def saveClient(request):
@@ -73,8 +74,31 @@ def fetchClientByPhone(request, **kwargs):
 
 @api_view(['POST'])
 def loginClient(request):
-    data = []
-    username = request.data.get('username')
+    status = { 'status': False}
+    password = request.data.get('password')
     phone = request.data.get('phone')
-    # client = Client.objects.
+    try:
+        client = Client.objects.get(phone=phone)
+        # if agent.status:
+        if check_password(password, client.password):
+            status = {
+                'status': True,
+                'message': 'Client verified succefully',
+                'data': {
+                    'id': client.id,
+                    'fullname': client.fullname,
+                    'phone': client.phone,
+                    'image': f'http://192.168.43.246:8000/media/{client.image}',
+                    'lastConnection': client.lastConnection,
+                }
+            }
+        else:
+            status = {'status': False, 'message': 'Client password incorrect'}
+        # else:
+        #     status ={ 'status': False, 'message': 'Agent does not activated' }
+    except Client.DoesNotExist:
+        status = {'status': False,
+                  'message': 'Client with this phone number does not exists'}
+    return JsonResponse(status)
+        
     

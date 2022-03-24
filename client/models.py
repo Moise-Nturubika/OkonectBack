@@ -10,4 +10,3 @@ class Client(models.Model):
     class Meta:
         db_table = 'tbClient'
         managed = True
-        
