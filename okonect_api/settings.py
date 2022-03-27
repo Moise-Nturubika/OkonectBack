@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'music.apps.MusicConfig',
     'serie.apps.SerieConfig',
     'video.apps.VideoConfig',
+    'chat.apps.ChatConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

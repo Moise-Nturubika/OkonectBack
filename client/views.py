@@ -94,8 +94,6 @@ def loginClient(request):
             }
         else:
             status = {'status': False, 'message': 'Client password incorrect'}
-        # else:
-        #     status ={ 'status': False, 'message': 'Agent does not activated' }
     except Client.DoesNotExist:
         status = {'status': False,
                   'message': 'Client with this phone number does not exists'}

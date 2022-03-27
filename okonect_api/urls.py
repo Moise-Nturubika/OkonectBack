@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/client/', include('client.urls')),
     path('api/serie/', include('serie.urls')),
-    path('api/media/', include('video.urls'))
+    path('api/media/', include('video.urls')),
+    path('api/chat/', include('chat.urls'))
 ]
 
 if settings.DEBUG:
