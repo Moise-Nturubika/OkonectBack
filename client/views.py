@@ -99,4 +99,8 @@ def loginClient(request):
                   'message': 'Client with this phone number does not exists'}
     return JsonResponse(status)
         
-    
+@api_view(['GET'])
+def fetchAllClients(request):
+    clients = Client.objects.all()
+    client_serializer = ClientSerializer(clients, many=True)
+    return JsonResponse(client_serializer.data, safe=False)
