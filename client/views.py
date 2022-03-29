@@ -101,6 +101,16 @@ def loginClient(request):
         
 @api_view(['GET'])
 def fetchAllClients(request):
+    data = []
     clients = Client.objects.all()
-    client_serializer = ClientSerializer(clients, many=True)
-    return JsonResponse(client_serializer.data, safe=False)
+    for client in clients:
+        data.append(
+            {
+                'id': client.id,
+                'fullname': client.fullname,
+                'phone': client.phone,
+                'image': f'http://192.168.43.246:8000/media/{client.image}',
+                'lastConnection': client.lastConnection,
+            }
+        )
+    return JsonResponse(data, safe=False)
