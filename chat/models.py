@@ -3,7 +3,7 @@ from client.models import Client
 
 class Canal(models.Model):
     designation = models.CharField(db_column="designation", max_length=100)
-    8
+    description = models.CharField(db_column="description", max_length=255, null=True)
     class Meta:
         db_table = 'tbCanal'
         

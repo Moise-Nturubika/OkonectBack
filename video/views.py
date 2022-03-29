@@ -112,7 +112,7 @@ def fetchAllMedia(request):
 
 @api_view(['GET'])
 def fetchMediaById(request, **kwargs):
-    response = {'status':False}
+    response = { 'status':False }
     id = kwargs['id']
     try:
         media = Media.objects.get(pk=id)

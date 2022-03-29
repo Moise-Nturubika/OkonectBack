@@ -1,4 +1,4 @@
-from chat.serializers import ChatSerializer
+from chat.serializers import CanalSerializer, ChatSerializer
 from rest_framework.decorators import api_view
 from django.http.response import JsonResponse
 # from .serializers import MediaSerializer, CategorySerializer
@@ -24,3 +24,9 @@ def saveChat(request):
             'message': "Chat data are not valid"
         }
     return JsonResponse(status)
+
+@api_view(['GET'])
+def fetchAllChannels(request):
+    canals = Canal.objects.all()
+    canal_serializer = CanalSerializer(canals, many=True)
+    return JsonResponse(canal_serializer.data, safe=False)
