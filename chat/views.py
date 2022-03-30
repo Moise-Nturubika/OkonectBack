@@ -31,3 +31,9 @@ def fetchAllChannels(request):
     canals = Canal.objects.all()
     canal_serializer = CanalSerializer(canals, many=True)
     return JsonResponse(canal_serializer.data, safe=False)
+
+@api_view(['GET'])
+def fetchCanalChat(request, canal):
+    canals = Canal.objects.all()
+    canal_serializer = CanalSerializer(canals, many=True)
+    return JsonResponse(canal_serializer.data, safe=False)
