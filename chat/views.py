@@ -12,7 +12,8 @@ def saveChat(request):
     status = { 'status': False }
     chat_serializer = ChatSerializer(data=request.data)
     if chat_serializer.is_valid():
-        chat = chat_serializer.save()
+        chatSaved = chat_serializer.save()
+        chat = ChatSerializer(chatSaved)
         status = {
             'status': True,
             'message': "Chat saved successfully",
@@ -21,7 +22,7 @@ def saveChat(request):
     else:
         status = {
             'status': False,
-            'message': "Chat data are not valid"
+            'message': f"Chat data are not valid {chat_serializer.errors}"
         }
     return JsonResponse(status)
 
