@@ -88,7 +88,7 @@ def loginClient(request):
                     'id': client.id,
                     'fullname': client.fullname,
                     'phone': client.phone,
-                    'image': f'http://192.168.43.246:8000/media/{client.image}',
+                    'image': f'http://192.168.5.29:8000/media/{client.image}',
                     'lastConnection': client.lastConnection,
                 }
             }
@@ -109,7 +109,7 @@ def fetchAllClients(request):
                 'id': client.id,
                 'fullname': client.fullname,
                 'phone': client.phone,
-                'image': f'http://192.168.43.246:8000/media/{client.image}',
+                'image': f'http://192.168.5.29:8000/media/{client.image}',
                 'lastConnection': client.lastConnection,
             }
         )

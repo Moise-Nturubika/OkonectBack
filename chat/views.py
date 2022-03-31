@@ -34,6 +34,29 @@ def fetchAllChannels(request):
 
 @api_view(['GET'])
 def fetchCanalChat(request, canal):
-    canals = Canal.objects.all()
-    canal_serializer = CanalSerializer(canals, many=True)
-    return JsonResponse(canal_serializer.data, safe=False)
+    data = []
+    channel = Canal.objects.get(pk=canal)
+    chats = Chat.objects.filter(refCanal=channel).order_by('-dateMsg')
+    for chat in chats:
+        # categ = CategorySerializer(media.refCategory)
+        # client = ClientSerializer(media.refClient)
+        data.append(
+            {
+                'id': chat.id,
+                'message': chat.message,
+                'dateMsg': chat.dateMsg,
+                'isPrivate': chat.isPrivate,
+                'canal': {
+                    'id': chat.refCanal.id,
+                    'designation': chat.refCanal.designation,
+                    'description': chat.refCanal.description
+                },
+                'client': {
+                    'id': chat.refClient.id,
+                    'fullname': chat.refClient.fullname,
+                    'phone': chat.refClient.phone,
+                    'image': f"http://192.168.5.29:8000/media/{chat.refClient.image}"
+                }
+            }
+        )
+    return JsonResponse(data, safe=False)
