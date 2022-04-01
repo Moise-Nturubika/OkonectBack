@@ -8,6 +8,7 @@ urlpatterns = [
     path('show/top', views.fetchTopMedia),
     path('show/recent', views.fetchRecentMedia),
     path('show/category/<str:category>', views.fetchMediaByCategory),
+    path('category/search', views.fetchSearchedMediaByCategory),
     path('show/client/<str:pk>', views.fetchMediaClient),
     
     path('update', views.updateMedia),

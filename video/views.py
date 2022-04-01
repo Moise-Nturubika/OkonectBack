@@ -163,6 +163,32 @@ def fetchMediaByCategory(request, **kwargs):
         )
     return JsonResponse(data, safe=False)
 
+@api_view(['POST'])
+def fetchSearchedMediaByCategory(request):
+    data = []
+    print("*****************************************")
+    print(request.data)
+    category = request.data.get('category')
+    search = request.data.get('search')
+    cat = Category.objects.get(pk=category)
+    medias = Media.objects.filter(title__icontains=search,refCategory=cat)
+    for media in medias:
+        categ = CategorySerializer(media.refCategory)
+        client = ClientSerializer(media.refClient)
+        data.append(
+            {
+                'id': media.id,
+                'title': media.title,
+                'auteur': media.auteur,
+                'poster': None if media.poster == None or len(media.poster) == 0 else f'http://192.168.5.29:8000/media/{media.poster}',
+                'file': f'http://192.168.5.29:8000/media/{media.file}' if media.file != None or len(media.file) == 0  else None,
+                'dateAjout': media.dateAjout,
+                'category': categ.data,
+                'client': client.data
+            }
+        )
+    return JsonResponse(data, safe=False)
+
 @api_view(['GET'])
 def fetchTopMedia(request):
     data = []
