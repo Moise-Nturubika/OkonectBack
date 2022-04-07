@@ -6,6 +6,7 @@ urlpatterns = [
     path('show/all', views.fetchAllMedia),
     path('show/key/<int:id>', views.fetchMediaById),
     path('show/top', views.fetchTopMedia),
+    path('show/caroussel', views.fetchCarousselMedia),
     path('show/recent', views.fetchRecentMedia),
     path('show/category/<str:category>', views.fetchMediaByCategory),
     path('category/search', views.fetchSearchedMediaByCategory),
